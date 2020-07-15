@@ -1,12 +1,12 @@
 {
-    "name": "tangent-solutions/powerbi-sdk",
+    "name": "hongkai/powerbi-hk-sdk",
     "description": "PHP SDK for working with PowerBI",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Tangent Solutions",
-            "homepage": "http://tangentsolutions.co.za/"
+            "name": "hongkai",
+            "homepage": ""
         }
     ],
     "autoload": {
@@ -15,9 +15,7 @@
         }
     },
     "autoload-dev": {
-        "psr-4": {
-            "Tngnt\\PBI\\Tests\\": "tests/"
-        }
+	
     },
     "require": {
         "php": ">=5.6"
