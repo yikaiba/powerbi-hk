@@ -13,6 +13,8 @@ class Group
 {
     const GROUP_URL = "https://api.powerbi.com/v1.0/myorg/groups";
 
+    const ADD_GROUP_USER_URL = "https://api.powerbi.com/v1.0/myorg/groups/%s/users";
+
     /**
      * The SDK client
      *
@@ -38,6 +40,16 @@ class Group
     public function getGroups()
     {
         $response = $this->client->request(Client::METHOD_GET, self::GROUP_URL);
+
+        return $this->client->generateResponse($response);
+    }
+
+
+    public function addGroupUser($groupId,  array $credentials)
+    {
+        $url = sprintf(self::ADD_GROUP_USER_URL, $groupId);
+
+        $response = $this->client->requestFormUrlencoded(Client::METHOD_POST, $url, $credentials);
 
         return $this->client->generateResponse($response);
     }

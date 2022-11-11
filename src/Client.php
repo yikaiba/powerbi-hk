@@ -288,7 +288,57 @@ class Client
         if ($body) {
             $requestOptions = array_merge($requestOptions, ['body' => json_encode($body)]);
         }
+//        var_dump($requestOptions);exit;
 
+        return $this->httpClient->request($method, $url, $requestOptions);
+    }
+    public function requestFormUrlencoded($method, $url, $body = null)
+    {
+        // Default Options
+        $requestOptions = [
+            'headers' => [
+                "Accept"        => "application/json",
+                "Authorization" => sprintf("Bearer %s", $this->getToken()),
+                "Content-Type"  => "application/x-www-form-urlencoded",
+            ]
+        ];
+
+        // Add body if one was provided.
+        if ($body) {
+            $requestOptions = array_merge($requestOptions, ['form_params' => $body]);
+        }
+//        var_dump($requestOptions);exit;
+
+        return $this->httpClient->request($method, $url, $requestOptions);
+    }
+
+    /**
+     * Notes:
+     * @author:hongkai - 9/2/2020 3:40 PM
+     * @param $method
+     * @param $url
+     * @param null $body
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function requestFile($method, $url, $body = null)
+    {
+        // Default Options
+        $requestOptions = [
+            'headers' => [
+                "Accept"        => "*/*",
+                "Authorization" => sprintf("Bearer %s", $this->getToken()),
+            	"Content-Type"  => "multipart/form-data",
+            ]
+        ];
+
+        // Add body if one was provided.
+        if ($body) {
+            foreach ($body as $key=>$val){
+                $body[$key]['headers'] = $requestOptions['headers'];
+            }
+            $requestOptions = array_merge($requestOptions, ['multipart' => $body]);
+        }
         return $this->httpClient->request($method, $url, $requestOptions);
     }
 
